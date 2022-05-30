@@ -1,0 +1,76 @@
+---
+title: "Rapport devoir d'analyse"
+author: "Gilles Darjana, Florian Jean-Baptiste dit Doudoute, Rezal Sakiman"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(warn=-1)
+```
+
+## Importation et préparation des données
+
+Les données fournit étaient stocké dans un fichier excel que nous avons convertis en fichier csv plus pratique à importer dans R.
+L'importation des données se fait à l'aide de l'appel suivante :
+
+```{r}
+Data <- read.csv("D:/Univ/L4/Analyse exploratoire/ACP---Analyse-exploratoire-des-donn-es/Car2DB_fra_cut.csv", sep = ";", encoding = "UTF-8", na.strings = c("", "NA", "#N/A", " "), dec = ",")
+```
+
+Pour la préparation des données, nous avons réaliser une fonction permettant dans un premier temps de nettoyer les noms de colonne à l'aide du package janitor. Ensuite nous avons fait en sorte de supprimer les colonnes ayant un nombre de valeurs manquantes supérieur à un cinquième du nombre d'observations dans le dataset. Dans notre cas nous enlèverons donc les colonnes ayant plus de 311 valeurs manquantes. Cela nous permet d'ensuite supprimer les lignes ayant des valeurs manquantes. Si nous avions supprimer les lignes ayant des valeurs manquantes sans gérer les précédentes colonnes, le dataset aurait été vide.
+
+L'appel suivant permet de nettoyer nos données :
+
+```{r}
+source("scripts/generalist_cleaning.R")
+Data <- clean(Data)
+```
+
+Pour la suite du devoir, nous n'utiliserons que les variables suivantes :
+
+- cylindree_cm3
+- puissance_de_moteur_ch
+- longueur_mm
+- largeur_mm
+- poids_a_vide_kg
+- vitesse_max_km_h
+
+```{r}
+data_utilise <- Data[c("cylindree_cm3", "puissance_de_moteur_ch", "longueur_mm", "largeur_mm", "poids_a_vide_kg", "vitesse_max_km_h")]
+head(data_utilise)
+```
+
+## Normalisation des données
+
+Pour cette partie, nous avons réalisé une fonction nous permettant de centrer et réduire nos données.
+
+```{r}
+source("scripts/centrer_reduire.R")
+donnees <- centrer_reduire(data_utilise)
+head(donnees)
+```
+
+On peut comparer le résultat obtenu avec la fonction scale de R permettant de normaliser les données.
+
+```{r}
+data_scale <- scale(data_utilise)
+head(data_scale)
+```
+
+## Corrélation entre deux variables
+
+```{r}
+source("scripts/correlation.R")
+all_regression_simple(data_utilise)
+```
+
+Matrice de corrélation :
+
+```{r}
+cor(data_utilise)
+```
+
+
+
+

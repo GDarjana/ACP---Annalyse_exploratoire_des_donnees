@@ -1,5 +1,5 @@
-library(janitor)
-library(dplyr)
+suppressMessages(library(janitor))
+suppressMessages(library(dplyr))
 
 clean_colname <- function(dataset){
   return(clean_names(dataset))
@@ -8,9 +8,9 @@ clean_colname <- function(dataset){
 clean_na <- function(dataset){
   liste_nom_col = c()
   
-  #supprime les colonne contenant plus de 300 valeurs manquantes (300 étant un nombre choisi arbitrairement)
+  #supprime les colonnes ayant un nombre de valeurs manquantes supérieurs à 1/5 du nombre d'observations total
   for(i in 1:length(dataset)){
-    if(sum(is.na(dataset[i])) > 300){
+    if(sum(is.na(dataset[i])) > (1/5)*nrow(dataset)){
       liste_nom_col <- c(liste_nom_col, names(dataset[i]))
     }
   }
