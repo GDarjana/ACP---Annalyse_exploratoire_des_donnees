@@ -15,7 +15,7 @@ Les données fournit étaient stocké dans un fichier excel que nous avons conve
 L'importation des données se fait à l'aide de l'appel suivante :
 
 ```{r}
-Data <- read.csv("D:/Univ/L4/Analyse exploratoire/ACP---Analyse-exploratoire-des-donn-es/Car2DB_fra_cut.csv", sep = ";", encoding = "UTF-8", na.strings = c("", "NA", "#N/A", " "), dec = ",")
+Data <- read.csv("Car2DB_fra_cut.csv", sep = ";", encoding = "UTF-8", na.strings = c("", "NA", "#N/A", " "), dec = ",")
 ```
 
 Pour la préparation des données, nous avons réaliser une fonction permettant dans un premier temps de nettoyer les noms de colonne à l'aide du package janitor. Ensuite nous avons fait en sorte de supprimer les colonnes ayant un nombre de valeurs manquantes supérieur à un cinquième du nombre d'observations dans le dataset. Dans notre cas nous enlèverons donc les colonnes ayant plus de 311 valeurs manquantes. Cela nous permet d'ensuite supprimer les lignes ayant des valeurs manquantes. Si nous avions supprimer les lignes ayant des valeurs manquantes sans gérer les précédentes colonnes, le dataset aurait été vide.

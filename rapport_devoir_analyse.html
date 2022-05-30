@@ -173,7 +173,7 @@ pre code {
 <div id="importation-et-préparation-des-données" class="section level2">
 <h2>Importation et préparation des données</h2>
 <p>Les données fournit étaient stocké dans un fichier excel que nous avons convertis en fichier csv plus pratique à importer dans R. L’importation des données se fait à l’aide de l’appel suivante :</p>
-<pre class="r"><code>Data &lt;- read.csv(&quot;D:/Univ/L4/Analyse exploratoire/ACP---Analyse-exploratoire-des-donn-es/Car2DB_fra_cut.csv&quot;, sep = &quot;;&quot;, encoding = &quot;UTF-8&quot;, na.strings = c(&quot;&quot;, &quot;NA&quot;, &quot;#N/A&quot;, &quot; &quot;), dec = &quot;,&quot;)</code></pre>
+<pre class="r"><code>Data &lt;- read.csv(&quot;Car2DB_fra_cut.csv&quot;, sep = &quot;;&quot;, encoding = &quot;UTF-8&quot;, na.strings = c(&quot;&quot;, &quot;NA&quot;, &quot;#N/A&quot;, &quot; &quot;), dec = &quot;,&quot;)</code></pre>
 <p>Pour la préparation des données, nous avons réaliser une fonction permettant dans un premier temps de nettoyer les noms de colonne à l’aide du package janitor. Ensuite nous avons fait en sorte de supprimer les colonnes ayant un nombre de valeurs manquantes supérieur à un cinquième du nombre d’observations dans le dataset. Dans notre cas nous enlèverons donc les colonnes ayant plus de 311 valeurs manquantes. Cela nous permet d’ensuite supprimer les lignes ayant des valeurs manquantes. Si nous avions supprimer les lignes ayant des valeurs manquantes sans gérer les précédentes colonnes, le dataset aurait été vide.</p>
 <p>L’appel suivant permet de nettoyer nos données :</p>
 <pre class="r"><code>source(&quot;scripts/generalist_cleaning.R&quot;)
