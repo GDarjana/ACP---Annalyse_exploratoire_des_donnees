@@ -75,5 +75,124 @@ Matrice de corrélation :
 cor(data_utilise)
 ```
 
+# Analyse en composante principale
 
+Dans cette partie nous allons appliquer la méthode ACP et analyser les résultats sur les plans (1,2), (1,3) et (2,3).
+La méthode PCA() du package FactoMineR normalise automatiquement les données, il n'est donc pas nécessaire de réaliser cette transformation avant l'ACP.
+
+La fonction ACP() que nous avons réalisé affiche le pourcentage d'information par axe via un graphe et retourne le résultat de la fonction PCA()
+
+```{r}
+source("scripts/acp.R")
+
+res.pca <- ACP(data_utilise)
+```
+
+Pour les questions 6, 7 et 8 nous allons les réaliser par plan.
+
+## Axes (1,2)
+
+```{r, figures-side-1-2, fig.show="hold", out.width="50%"}
+fviz_pca_ind(res.pca, axes = c(1,2))
+fviz_pca_var(res.pca, axes = c(1,2))
+```
+
+Le plan (1,2) nous montre 87.5% d'information ce qui est très bien. On remarque que les variables longueur_mm, cylindree_cm3, largeur_mm, poids_a_vide_kg et puissance_de_moteur_ch sont positivement corrélées les unes aux autres. En revanche poids_a_vide_kg et vitesse_max_km_h ne sont pas corrélées, on pouvait déjà le voir dans la partie précédente.
+
+Au niveau de la typologie des véhicules on aurait : 
+
+- les véhicules petites et légères qui auraient donc besoin de moins de puissance moteur et de moins de cylindrée
+- les véhicules plus grandes donc plus lourdes et qui ont besoin de plus de puissance moteur et de cylindrée
+
+Les ressemblances sont donc fondées sur la puissance du moteur, la longueur, la largeur, la cylindrée et le poids à vide.
+
+## Axes (1,3)
+
+```{r, figures-side-1-3, fig.show="hold", out.width="50%"}
+fviz_pca_ind(res.pca, axes = c(1,3))
+fviz_pca_var(res.pca, axes = c(1,3))
+```
+
+Le plan (1,3) nous montre 81.1% d'information ce qui est aussi très bien. On remarque que toutes les variables sont positivement corrélées sauf vitesse_max_km_h qui n'est pas assez bien représenté pour en conclure quelque chose.
+
+La typologie des véhicules est similaire au plan précédant : 
+
+- les véhicules petites et légères qui auraient donc besoin de moins de puissance moteur et de moins de cylindrée
+- les véhicules plus grandes donc plus lourdes et qui ont besoin de plus de puissance moteur et de cylindrée
+
+Les ressemblances sont aussi fondées sur les mêmes variables que précédemment, la puissance du moteur, la longueur, la largeur, la cylindrée et le poids à vide.
+
+Ces similiratées avec le plan précédent sont dûes au fait que l'axe 1, commun aux deux plans, explique la quasi totalité des deux plans (74.2%).
+
+## Axes (2,3)
+
+```{r, figures-side-2-3, fig.show="hold", out.width="50%"}
+fviz_pca_ind(res.pca, axes = c(2,3))
+fviz_pca_var(res.pca, axes = c(2,3))
+```
+
+Ce plan nous donne très peu d'information, seulement 20.2%. Par ailleurs aucune variable n'est bien représenté dans le cercle des corrélations, on ne peut donc rien en conclure.
+
+# Graphe 3D
+
+La fonction suivante nous permet d'avoir un graphe en 3D avec les trois premières dimensions:
+
+```{r}
+library("scatterplot3d")
+
+scatterplot3d(x = res.pca$ind$coord[,1],
+                    y = res.pca$ind$coord[,2],
+                    z = res.pca$ind$coord[,3],
+                    xlab = "Dim 1",
+                    ylab = "Dim 2",
+                    zlab = "Dim 3")
+```
+
+Nous avons ensuite décidé d'utliser la méthode de K-means afin d'avoir trois groupes d'individus.
+
+```{r}
+res.kmeans <- kmeans(res.pca$ind$coord, 3)
+scatterplot3d(x = res.pca$ind$coord[,1],
+                    y = res.pca$ind$coord[,2],
+                    z = res.pca$ind$coord[,3],
+                    color=factor(res.kmeans$cluster),
+                    xlab = "Dim 1",
+                    ylab = "Dim 2",
+                    zlab = "Dim 3")
+```
+
+# ACP supplémentaire
+
+Pour cette dernière partie nous allons rajouté les variables garde_au_sol_mm, acceleration_0_100_km_h_seconde, couple_maximal_n_m et reservoir_l.
+
+```{r}
+data_acp_sup <- Data[c("cylindree_cm3", "puissance_de_moteur_ch", "longueur_mm", "largeur_mm", "poids_a_vide_kg", "vitesse_max_km_h", "garde_au_sol_mm", "acceleration_0_100_km_h_seconde", "couple_maximal_n_m", "reservoir_l")]
+head(data_acp_sup)
+```
+
+```{r}
+res.pca.sup <- ACP(data_acp_sup)
+```
+
+## Axes (1,2)
+
+```{r, figures-side-sup, fig.show="hold", out.width="50%"}
+fviz_pca_ind(res.pca.sup, axes = c(1,2))
+fviz_pca_var(res.pca.sup, axes = c(1,2), labelsize = 3)
+```
+
+Dans ce plan nous pouvons voir que les variables cylindree_cm3, puissance_de_moteur_ch, longueur_mm, largeur_mm, poids_a_vide_kg, reservoir_l et couple_maximal_n_m sont positivement corrélées, les variables vitesse_max_km_h et acceleration_0_100_km_h_seconde sont inversement corrélées et vitesse_max_km_h et garde_au_sol_mm ne sont pas corrélées.
+
+## Clustering
+
+```{r}
+res.kmeans.sup <- kmeans(res.pca.sup$ind$coord, 3)
+scatterplot3d(x = res.pca$ind$coord[,1],
+                    y = res.pca.sup$ind$coord[,2],
+                    z = res.pca.sup$ind$coord[,3],
+                    color=factor(res.kmeans.sup$cluster),
+                    xlab = "Dim 1",
+                    ylab = "Dim 2",
+                    zlab = "Dim 3")
+```
 
