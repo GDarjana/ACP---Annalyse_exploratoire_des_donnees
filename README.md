@@ -9,7 +9,7 @@ Membres du groupe :
 - Rezal Sakiman
 - Gilles Darjana
 
-Ce projet a été effectué sous le langage R. Les différents fichiers sont présents dans le dossier <ins>scripts</ins> .
+Ce projet a été effectué sous le langage R. Les différents fichiers sont présents dans le dossier <ins>[scripts](https://github.com/GDarjana/ACP---Annalyse_exploratoire_des_donnes/tree/master/scripts)</ins> .
 
 Packages à installer :
 
