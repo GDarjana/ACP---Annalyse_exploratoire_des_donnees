@@ -14,8 +14,11 @@ nuageDePoints <- function(var1,var2,titreV1,titreV2){
   
   plot(x = var1, y = var2,
        xlab = titreV1,
-       ylab = titreV2
+       ylab = titreV2,
+       col = c("blue", "purple"), 
+       pch = 1
   )
+  legend("bottomright", legend = c(titreV1, titreV2), col = c("blue", "purple"), pch = 1, cex=0.8, bg='gray')
 }
 
 all_regression_simple <- function(dataset){

@@ -1,5 +1,5 @@
-suppressMessages(library(janitor))
-suppressMessages(library(dplyr))
+library(janitor)
+library(dplyr)
 
 clean_colname <- function(dataset){
   return(clean_names(dataset))

@@ -13,3 +13,5 @@ using_data <- Data[c("cylindree_cm3", "puissance_de_moteur_ch", "longueur_mm", "
 #comparaison de la fonction center réduire de R et de la notre
 sub_scale <- scale(using_data)
 sub_fonc <- centrer_reduire(using_data)
+
+nuageDePoints(using_data$cylindree_cm3, using_data$largeur_mm, "cylindree_cm3", "largeur_mm")

@@ -1,15 +1,17 @@
 ---
 title: "Rapport devoir d'analyse"
 author: "Gilles Darjana, Florian Jean-Baptiste dit Doudoute, Rezal Sakiman"
-output: html_document
+output:
+   html_document :
+     toc : true
+     toc_depth : 2
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-options(warn=-1)
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
-## Importation et préparation des données
+# Importation et préparation des données
 
 Les données fournit étaient stocké dans un fichier excel que nous avons convertis en fichier csv plus pratique à importer dans R.
 L'importation des données se fait à l'aide de l'appel suivante :
@@ -41,7 +43,7 @@ data_utilise <- Data[c("cylindree_cm3", "puissance_de_moteur_ch", "longueur_mm",
 head(data_utilise)
 ```
 
-## Normalisation des données
+# Normalisation des données
 
 Pour cette partie, nous avons réalisé une fonction nous permettant de centrer et réduire nos données.
 
@@ -58,7 +60,9 @@ data_scale <- scale(data_utilise)
 head(data_scale)
 ```
 
-## Corrélation entre deux variables
+# Corrélation entre deux variables
+
+Pour cette partie nous avons tout d'abord une fonction permettant de réaliser un nuage de points. Ensuite, pour faciliter le travail et aller plus vite, nous avons fait une fonction appelant la fonction nuageDePoints précédemment créée et réalisant une regression simple pour chaque couple de variables possibles. 
 
 ```{r}
 source("scripts/correlation.R")
@@ -70,7 +74,6 @@ Matrice de corrélation :
 ```{r}
 cor(data_utilise)
 ```
-
 
 
 
