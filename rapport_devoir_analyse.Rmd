@@ -138,27 +138,34 @@ Ce plan nous donne très peu d'information, seulement 20.2%. Par ailleurs aucune
 La fonction suivante nous permet d'avoir un graphe en 3D avec les trois premières dimensions:
 
 ```{r}
-library("scatterplot3d")
+library(plotly)
 
-scatterplot3d(x = res.pca$ind$coord[,1],
-                    y = res.pca$ind$coord[,2],
-                    z = res.pca$ind$coord[,3],
-                    xlab = "Dim 1",
-                    ylab = "Dim 2",
-                    zlab = "Dim 3")
+fig3d <- plot_ly(x = res.pca$ind$coord[,1], 
+        y = res.pca$ind$coord[,2], 
+        z = res.pca$ind$coord[,3])
+
+fig3d <- fig3d %>% add_markers()
+fig3d <- fig3d %>% layout(scene = list(xaxis = list(title = 'Dim 1'),
+                                    yaxis = list(title = 'Dim 2'),
+                                    zaxis = list(title = 'Dim 3')))
+fig3d
 ```
 
 Nous avons ensuite décidé d'utliser la méthode de K-means afin d'avoir trois groupes d'individus.
 
 ```{r}
 res.kmeans <- kmeans(res.pca$ind$coord, 3)
-scatterplot3d(x = res.pca$ind$coord[,1],
-                    y = res.pca$ind$coord[,2],
-                    z = res.pca$ind$coord[,3],
-                    color=factor(res.kmeans$cluster),
-                    xlab = "Dim 1",
-                    ylab = "Dim 2",
-                    zlab = "Dim 3")
+
+fig3d.kmeans <- plot_ly(x = res.pca$ind$coord[,1], 
+        y = res.pca$ind$coord[,2], 
+        z = res.pca$ind$coord[,3],
+        color=factor(res.kmeans$cluster))
+
+fig3d.kmeans <- fig3d.kmeans %>% add_markers()
+fig3d.kmeans <- fig3d.kmeans %>% layout(scene = list(xaxis = list(title = 'Dim 1'),
+                                    yaxis = list(title = 'Dim 2'),
+                                    zaxis = list(title = 'Dim 3')))
+fig3d.kmeans
 ```
 
 # ACP supplémentaire
@@ -187,12 +194,18 @@ Dans ce plan nous pouvons voir que les variables cylindree_cm3, puissance_de_mot
 
 ```{r}
 res.kmeans.sup <- kmeans(res.pca.sup$ind$coord, 3)
-scatterplot3d(x = res.pca$ind$coord[,1],
-                    y = res.pca.sup$ind$coord[,2],
-                    z = res.pca.sup$ind$coord[,3],
-                    color=factor(res.kmeans.sup$cluster),
-                    xlab = "Dim 1",
-                    ylab = "Dim 2",
-                    zlab = "Dim 3")
+
+fig3d.sup <- plot_ly(x = res.pca.sup$ind$coord[,1], 
+        y = res.pca.sup$ind$coord[,2], 
+        z = res.pca.sup$ind$coord[,3],
+        color=factor(res.kmeans.sup$cluster))
+fig3d.sup <- fig3d.sup %>% add_markers()
+fig3d.sup <- fig3d.sup %>% layout(scene = list(xaxis = list(title = 'Dim 1'),
+                                    yaxis = list(title = 'Dim 2'),
+                                    zaxis = list(title = 'Dim 3')))
+fig3d.sup
 ```
+
+
+
 

@@ -14,7 +14,7 @@ Ce projet a été effectué sous le langage R. Les différents fichiers sont pr�
 Packages à installer :
 
 ```r
-install.packages("scatterplot3d")
+install.packages("plotly")
 ```
 
 ```r
